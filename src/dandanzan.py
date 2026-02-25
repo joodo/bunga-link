@@ -31,7 +31,8 @@ class DandanzanLinker(BungaLinker):
         for li in li_elements:
             title = li.select_one("h2").get_text()
 
-            path = str(li.select_one("a.thumbnail").get("href", "none"))
+            key = str(li.select_one("a.thumbnail").get("href", "none"))
+            key = key.strip("/").replace(".html", "").replace("/", "-")
 
             thumb_url = li.select_one("img").get("src", None)
             if thumb_url is not None:
@@ -44,7 +45,7 @@ class DandanzanLinker(BungaLinker):
             results.append(
                 SearchResult(
                     title=title,
-                    path=path,
+                    key=key,
                     thumb_url=thumb_url,
                     country=country,
                     year=year,
@@ -55,8 +56,9 @@ class DandanzanLinker(BungaLinker):
 
     @classmethod
     @override
-    def detail(cls, path: str) -> Media:
-        url = "https://dandanzan.org" + path
+    def detail(cls, key: str) -> Media:
+        category, item_id = key.split("-")
+        url = f"https://dandanzan.org/{category}/{item_id}.html"
         soup = BeautifulSoup(cls._get_http(url), "html.parser")
 
         title = soup.select_one("h1.product-title").get_text(strip=True)
@@ -96,10 +98,9 @@ class DandanzanLinker(BungaLinker):
 
     @classmethod
     @override
-    def sources(cls, path: str, ep_id: str) -> list[Source]:
-        detail = cls.detail(path)
-        key = re.findall(r"\d+", detail.thumb_url or "")[-1]
-        url = f"https://dandanzan.org/fetch_plays/{key}/{ep_id}"
+    def sources(cls, key: str, ep_id: str) -> list[Source]:
+        _, item_id = key.split("-")
+        url = f"https://dandanzan.org/fetch_plays/{item_id}/{ep_id}"
 
         data = json.loads(cls._get_http(url))
         return [

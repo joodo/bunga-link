@@ -14,7 +14,7 @@ class LinkerInfo:
 @dataclass
 class SearchResult:
     title: str
-    path: str
+    key: str
     thumb_url: str | None
     year: int | None
     country: str | None
@@ -59,11 +59,11 @@ class BungaLinker:
 
     @classmethod
     @abstractmethod
-    def detail(cls, path: str) -> Media: ...
+    def detail(cls, key: str) -> Media: ...
 
     @classmethod
     @abstractmethod
-    def sources(cls, path: str, ep_id: str) -> list[Source]: ...
+    def sources(cls, key: str, ep_id: str) -> list[Source]: ...
 
     @classmethod
     def _get_http(cls, url: str) -> str:

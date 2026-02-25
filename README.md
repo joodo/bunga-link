@@ -35,13 +35,13 @@ class MyNewLinker(BungaLinker):
         """Search the source for a keyword and return a list of brief results."""
         # Use cls._get_http(url) to fetch HTML/JSON safely
         return [
-            SearchResult(title="Example Movie", path="/v/123", thumb_url=None, year=2024, country="US")
+            SearchResult(title="Example Movie", key="/v/123", thumb_url=None, year=2024, country="US")
         ]
 
     @classmethod
     @override
-    def detail(cls, path: str) -> Media:
-        """Fetch full details and the episode list for a specific media path."""
+    def detail(cls, key: str) -> Media:
+        """Fetch full details and the episode list for a specific media key."""
         return Media(
             title="Example Movie",
             thumb_url="https://example.com/poster.jpg",
@@ -57,7 +57,7 @@ class MyNewLinker(BungaLinker):
 
     @classmethod
     @override
-    def sources(cls, path: str, ep_id: str) -> list[Source]:
+    def sources(cls, key: str, ep_id: str) -> list[Source]:
         """Return the actual playable video stream URLs for a specific episode."""
         return [
             Source(title="High Quality", url="https://cdn.example.com/video.m3u8")
