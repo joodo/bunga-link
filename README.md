@@ -9,6 +9,7 @@ To contribute a new source, please follow these steps:
 1. **Add a Linker**: Create a new linker file under the `src` directory.
 2. **Inherit**: Your class must inherit from the `BungaLinker` base class.
 3. **Implement**: Implement all required virtual methods defined in the base class.
+4. **Export**: Add you new linker to `src/__init__.py`.
 
 ---
 
@@ -16,7 +17,7 @@ To contribute a new source, please follow these steps:
 
 ```python
 from typing import override
-from .bunga_link import BungaLinker, LinkerInfo, SearchResult, Media, Episode, Source
+from .bunga_link import *
 
 class MyNewLinker(BungaLinker):
     @classmethod

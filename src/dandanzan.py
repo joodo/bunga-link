@@ -5,7 +5,7 @@ import re
 
 from bs4 import BeautifulSoup
 
-from .bunga_link import BungaLinker, LinkerInfo, SearchResult, Media, Episode, Source
+from .bunga_link import *
 
 
 class DandanzanLinker(BungaLinker):
