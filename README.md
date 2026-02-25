@@ -27,7 +27,6 @@ class MyNewLinker(BungaLinker):
             id="unique_provider_id",
             name="Display Name",
             url="https://example.com",
-            regex=r"^https://example\.com/.*",
         )
 
     @classmethod

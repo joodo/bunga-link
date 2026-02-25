@@ -9,7 +9,6 @@ class LinkerInfo:
     id: str
     name: str
     url: str
-    regex: str
 
 
 @dataclass

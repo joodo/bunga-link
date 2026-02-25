@@ -16,7 +16,6 @@ class DandanzanLinker(BungaLinker):
             id="dandanzan",
             name="蛋蛋赞",
             url="https://dandanzan.org/",
-            regex=r"^https://dandanzan\.org/.*",
         )
 
     @classmethod
