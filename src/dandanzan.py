@@ -9,8 +9,9 @@ from .bunga_link import BungaLinker, LinkerInfo, SearchResult, Media, Episode, S
 
 
 class DandanzanLinker(BungaLinker):
+    @classmethod
     @override
-    def info(self) -> LinkerInfo:
+    def info(cls) -> LinkerInfo:
         return LinkerInfo(
             id="dandanzan",
             name="蛋蛋赞",
@@ -18,10 +19,11 @@ class DandanzanLinker(BungaLinker):
             regex=r"^https://dandanzan\.org/.*",
         )
 
+    @classmethod
     @override
-    def search(self, keyword: str) -> list[SearchResult]:
+    def search(cls, keyword: str) -> list[SearchResult]:
         url = "https://dandanzan.org/so?q=" + quote_plus(keyword)
-        soup = BeautifulSoup(self._get_http(url), "html.parser")
+        soup = BeautifulSoup(cls._get_http(url), "html.parser")
 
         li_elements = soup.select("div.lists-content li")
 
@@ -52,10 +54,11 @@ class DandanzanLinker(BungaLinker):
 
         return results
 
+    @classmethod
     @override
-    def detail(self, path: str) -> Media:
+    def detail(cls, path: str) -> Media:
         url = "https://dandanzan.org" + path
-        soup = BeautifulSoup(self._get_http(url), "html.parser")
+        soup = BeautifulSoup(cls._get_http(url), "html.parser")
 
         title = soup.select_one("h1.product-title").get_text(strip=True)
 
@@ -92,13 +95,14 @@ class DandanzanLinker(BungaLinker):
             episodes=eps,
         )
 
+    @classmethod
     @override
-    def sources(self, path: str, ep_id: str) -> list[Source]:
-        detail = self.detail(path)
+    def sources(cls, path: str, ep_id: str) -> list[Source]:
+        detail = cls.detail(path)
         key = re.findall(r"\d+", detail.thumb_url or "")[-1]
         url = f"https://dandanzan.org/fetch_plays/{key}/{ep_id}"
 
-        data = json.loads(self._get_http(url))
+        data = json.loads(cls._get_http(url))
         return [
             Source(title=item["src_site"], url=item["play_data"])
             for item in data["video_plays"]

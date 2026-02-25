@@ -50,19 +50,24 @@ class Source:
 
 
 class BungaLinker:
+    @classmethod
     @abstractmethod
-    def info(self) -> LinkerInfo: ...
+    def info(cls) -> LinkerInfo: ...
 
+    @classmethod
     @abstractmethod
-    def search(self, keyword: str) -> list[SearchResult]: ...
+    def search(cls, keyword: str) -> list[SearchResult]: ...
 
+    @classmethod
     @abstractmethod
-    def detail(self, path: str) -> Media: ...
+    def detail(cls, path: str) -> Media: ...
 
+    @classmethod
     @abstractmethod
-    def sources(self, path: str, ep_id: str) -> list[Source]: ...
+    def sources(cls, path: str, ep_id: str) -> list[Source]: ...
 
-    def _get_http(self, url: str) -> str:
+    @classmethod
+    def _get_http(cls, url: str) -> str:
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
         }

@@ -19,8 +19,9 @@ from typing import override
 from .bunga_link import BungaLinker, LinkerInfo, SearchResult, Media, Episode, Source
 
 class MyNewLinker(BungaLinker):
+    @classmethod
     @override
-    def info(self) -> LinkerInfo:
+    def info(cls) -> LinkerInfo:
         """Return metadata about this linker, including a URL regex for matching."""
         return LinkerInfo(
             id="unique_provider_id",
@@ -29,16 +30,18 @@ class MyNewLinker(BungaLinker):
             regex=r"^https://example\.com/.*",
         )
 
+    @classmethod
     @override
-    def search(self, keyword: str) -> list[SearchResult]:
+    def search(cls, keyword: str) -> list[SearchResult]:
         """Search the source for a keyword and return a list of brief results."""
-        # Use self._get_http(url) to fetch HTML/JSON safely
+        # Use cls._get_http(url) to fetch HTML/JSON safely
         return [
             SearchResult(title="Example Movie", path="/v/123", thumb_url=None, year=2024, country="US")
         ]
 
+    @classmethod
     @override
-    def detail(self, path: str) -> Media:
+    def detail(cls, path: str) -> Media:
         """Fetch full details and the episode list for a specific media path."""
         return Media(
             title="Example Movie",
@@ -53,8 +56,9 @@ class MyNewLinker(BungaLinker):
             episodes=[Episode(id="1", title="Chapter 1")]
         )
 
+    @classmethod
     @override
-    def sources(self, path: str, ep_id: str) -> list[Source]:
+    def sources(cls, path: str, ep_id: str) -> list[Source]:
         """Return the actual playable video stream URLs for a specific episode."""
         return [
             Source(title="High Quality", url="https://cdn.example.com/video.m3u8")
