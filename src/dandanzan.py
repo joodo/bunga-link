@@ -75,7 +75,7 @@ class DandanzanLinker(BungaLinker):
         director = [a.get_text() for a in detail[0].select("a")]
         cast = [a.get_text() for a in detail[1].select("a")]
         genres = [a.get_text() for a in detail[2].select("a")]
-        country = "/".join([a.get_text() for a in detail[3].select("a")])
+        country = " / ".join([a.get_text() for a in detail[3].select("a")])
         summary = detail[5].get_text(strip=True)
 
         akas = titles[1:]
