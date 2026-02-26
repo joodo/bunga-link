@@ -11,4 +11,4 @@
 from src.dandanzan import DandanzanLinker
 
 if __name__ == "__main__":
-    print(DandanzanLinker().sources("/dianshiju/20251833.html", "ep6"))
+    print(DandanzanLinker().detail("dianying-20106447"))

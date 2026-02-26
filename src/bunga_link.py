@@ -24,10 +24,13 @@ class SearchResult:
 class Episode:
     id: str
     title: str
+    thumb_url: str | None
 
 
 @dataclass
 class Media:
+    origin: str
+
     title: str
     thumb_url: str | None
     year: int | None

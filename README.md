@@ -44,6 +44,7 @@ class MyNewLinker(BungaLinker):
     def detail(cls, key: str) -> Media:
         """Fetch full details and the episode list for a specific media key."""
         return Media(
+            origin="https://cdn.example.com/v/123",
             title="Example Movie",
             thumb_url="https://example.com/poster.jpg",
             year=2024,
@@ -53,7 +54,7 @@ class MyNewLinker(BungaLinker):
             genres=["Sci-Fi"],
             aka="Alternative Title",
             summary="A brief description of the media.",
-            episodes=[Episode(id="1", title="Chapter 1")]
+            episodes=[Episode(id="1", title="Chapter 1", thumb_url="https://example.com/ep1.jpg")]
         )
 
     @classmethod

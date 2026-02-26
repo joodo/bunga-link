@@ -61,10 +61,11 @@ class DandanzanLinker(BungaLinker):
         url = f"https://dandanzan.org/{category}/{item_id}.html"
         soup = BeautifulSoup(cls._get_http(url), "html.parser")
 
-        title = soup.select_one("h1.product-title").get_text(strip=True)
+        titles = soup.select_one("meta[name='keywords']").get("content", "").split(",")
+        title = titles[0]
 
         year_text = soup.select("header.product-header>span")[0].get_text()
-        year = re.findall(r"\d+", year_text)[0]
+        year = int(re.findall(r"\d+", year_text)[0])
 
         thumb_url = "https://dandanzan.org" + str(
             soup.select_one("header.product-header img").get("src")
@@ -75,15 +76,19 @@ class DandanzanLinker(BungaLinker):
         cast = [a.get_text() for a in detail[1].select("a")]
         genres = [a.get_text() for a in detail[2].select("a")]
         country = "/".join([a.get_text() for a in detail[3].select("a")])
-        aka = "/".join([a.get_text() for a in detail[4].select("a")])
         summary = detail[5].get_text(strip=True)
 
+        akas = titles[1:]
+        akas.append(detail[4].get_text())
+        aka = " / ".join(akas)
+
         eps = [
-            Episode(id=str(li.get("ep_slug")), title=li.get_text())
+            Episode(id=str(li.get("ep_slug")), title=li.get_text(), thumb_url=None)
             for li in soup.select("ul#eps-ul li")
         ]
 
         return Media(
+            origin=url,
             title=title,
             country=country,
             year=year,
